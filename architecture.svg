@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="708" viewBox="20 8 1000 708">
+<defs><marker id="arrow-495057" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#495057" /></marker><style>text { font-family: "Segoe UI", system-ui, -apple-system, sans-serif; }</style></defs>
+<rect x="20" y="8" width="1000" height="708" fill="#ffffff" />
+<text x="510" y="50" font-size="22" fill="#1971c2" text-anchor="middle" font-weight="600">MLflow Traces in Unity Catalog: data flow</text>
+<text x="510" y="77" font-size="13" fill="#868e96" text-anchor="middle">Public Preview, April 30, 2026</text>
+<rect x="340" y="108" width="340" height="80" rx="8" stroke="#f8f9fa" fill="#1971c2" stroke-width="0" />
+<text x="510" y="142" font-size="15" fill="#f8f9fa" text-anchor="middle" font-weight="600">Your agent</text>
+<text x="510" y="164" font-size="13" fill="#f8f9fa" text-anchor="middle">@mlflow.trace + autolog</text>
+<path d="M 510 188 L 510 228" stroke="#495057" fill="none" stroke-width="2" marker-end="url(#arrow-495057)" />
+<text x="525" y="212" font-size="12" fill="#868e96">OTel spans (protobuf)</text>
+<rect x="120" y="248" width="780" height="136" rx="8" stroke="#4dabf7" fill="transparent" stroke-width="1" />
+<text x="140" y="268" font-size="12" fill="#1971c2" font-weight="600">Databricks-managed pipeline</text>
+<rect x="180" y="288" width="300" height="68" rx="8" stroke="#f8f9fa" fill="#3b5bdb" stroke-width="0" />
+<text x="330" y="316" font-size="14" fill="#f8f9fa" text-anchor="middle" font-weight="600">Databricks OTel collector</text>
+<text x="330" y="334" font-size="12" fill="#f8f9fa" text-anchor="middle">REST endpoint</text>
+<path d="M 480 322 L 540 322" stroke="#495057" fill="none" stroke-width="2" marker-end="url(#arrow-495057)" />
+<rect x="540" y="288" width="300" height="68" rx="8" stroke="#f8f9fa" fill="#1864ab" stroke-width="0" />
+<text x="690" y="316" font-size="14" fill="#f8f9fa" text-anchor="middle" font-weight="600">Zerobus ingest</text>
+<text x="690" y="334" font-size="12" fill="#f8f9fa" text-anchor="middle">low-latency, serverless</text>
+<path d="M 510 384 L 510 424" stroke="#495057" fill="none" stroke-width="2" marker-end="url(#arrow-495057)" />
+<rect x="80" y="444" width="860" height="136" rx="8" stroke="#12b886" fill="transparent" stroke-width="1" />
+<text x="100" y="464" font-size="12" fill="#087f5b" font-weight="600">Your Unity Catalog schema (you own the data)</text>
+<rect x="108" y="484" width="196" height="80" rx="8" stroke="#f8f9fa" fill="#087f5b" stroke-width="0" />
+<text x="206" y="518" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">&lt;prefix&gt;_otel_spans</text>
+<text x="206" y="538" font-size="11" fill="#f8f9fa" text-anchor="middle">Delta table</text>
+<rect x="316" y="484" width="196" height="80" rx="8" stroke="#f8f9fa" fill="#087f5b" stroke-width="0" />
+<text x="414" y="518" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">&lt;prefix&gt;_otel_logs</text>
+<text x="414" y="538" font-size="11" fill="#f8f9fa" text-anchor="middle">Delta table</text>
+<rect x="524" y="484" width="196" height="80" rx="8" stroke="#f8f9fa" fill="#087f5b" stroke-width="0" />
+<text x="622" y="518" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">&lt;prefix&gt;_otel_metrics</text>
+<text x="622" y="538" font-size="11" fill="#f8f9fa" text-anchor="middle">Delta table</text>
+<rect x="732" y="484" width="196" height="80" rx="8" stroke="#f8f9fa" fill="#087f5b" stroke-width="0" />
+<text x="830" y="518" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">&lt;prefix&gt;_otel_annotations</text>
+<text x="830" y="538" font-size="11" fill="#f8f9fa" text-anchor="middle">Delta table</text>
+<path d="M 510 580 L 510 620" stroke="#495057" fill="none" stroke-width="2" marker-end="url(#arrow-495057)" />
+<rect x="40" y="640" width="168" height="56" rx="8" stroke="#f8f9fa" fill="#12b886" stroke-width="0" />
+<text x="124" y="672" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">MLflow UI</text>
+<rect x="222" y="640" width="168" height="56" rx="8" stroke="#f8f9fa" fill="#12b886" stroke-width="0" />
+<text x="306" y="672" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">SQL warehouse</text>
+<rect x="404" y="640" width="168" height="56" rx="8" stroke="#f8f9fa" fill="#12b886" stroke-width="0" />
+<text x="488" y="672" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">AI/BI dashboards</text>
+<rect x="586" y="640" width="168" height="56" rx="8" stroke="#f8f9fa" fill="#12b886" stroke-width="0" />
+<text x="670" y="672" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">Genie space</text>
+<rect x="768" y="640" width="232" height="56" rx="8" stroke="#f8f9fa" fill="#12b886" stroke-width="0" />
+<text x="884" y="672" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">mlflow.search_traces / evaluate</text>
+</svg>
