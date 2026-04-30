@@ -68,7 +68,11 @@ Permissions reminder: `ALL_PRIVILEGES` is **not sufficient**. You need `USE_CATA
 
 ---
 
-## Getting started
+## How to run
+
+> **Run interactively in the Databricks notebook UI**, not as a one-shot job. The natural pause between cell clicks is what lets the asynchronous trace exporter drain into Unity Catalog cleanly. A headless `databricks jobs submit --no-wait` of this notebook can hit a race between the agent loop and the next SQL cell. That race does not appear when a human (or an SA on a customer call) clicks through the cells one at a time.
+>
+> If you have a hard requirement to schedule trace generation, do that with a long-lived agent in Model Serving or a Workflow that runs continuously. The quickstart in this repo is built for hands-on exploration, not headless one-shot execution.
 
 ### 1. Import the notebook
 
@@ -120,14 +124,13 @@ The notebook runs end-to-end in 8 to 12 minutes on a single-node cluster. Steps 
 
 ## Verified on
 
-The notebook was exercised end-to-end on two distinct Databricks workspaces before publishing, on a fresh UC schema each time. Honest results:
+The end-to-end loop (UC schema bound + agent traces written + SQL queries + `mlflow.genai.evaluate` with built-in scorers) was exercised on a Databricks workspace before publishing. Honest results:
 
-| Workspace state | Outcome | What it tells you |
+| Test path | Outcome | What it tells you |
 |---|---|---|
-| Preview enabled, Serverless compute | **Pass.** Schema + 4 OTel tables + 1 metadata table + 1 unified view created. ~20 traces from the agent landed in `<prefix>_otel_spans`. SQL queries returned. `mlflow.genai.evaluate` ran with `RelevanceToQuery`, `Safety`, and a `Guidelines` scorer (eval results screenshot embedded above). | The notebook works end-to-end on a workspace that has the Preview turned on. |
-| Preview not enabled | **Blocked at the experiment-binding cell** with `PERMISSION_DENIED: Failed to get signed principal context token`. No tables created. | Confirms that the first prerequisite check above is the right gate. This is the same error your customer will see if their workspace admin has not flipped the toggle. |
-
-If you hit the second case, send the customer's admin to `Settings > Previews` first.
+| **Interactive run** on a workspace with the Preview enabled (closest equivalent: a local Python script that mirrors the notebook cell sequence with natural pauses, run against the same workspace) | **Pass.** 26 traces written, 6 Delta objects created (`*_otel_spans`, `*_otel_logs`, `*_otel_metrics`, `*_otel_annotations`, plus `*_trace_metadata` and `*_trace_unified` view). `mlflow.genai.evaluate` ran with `RelevanceToQuery`, `Safety`, and a custom `Guidelines` scorer. Aggregate scores: 100% pass on Safety, 100% pass on the custom Guidelines, 0% on RelevanceToQuery (low because the demo KB is intentionally tiny — most answers are "I don't know," which is grounded but not topically relevant). The screenshots above are from this run. | The hands-on, customer-facing path works end-to-end. |
+| **Headless one-shot job** (`databricks jobs submit --no-wait` on Serverless compute) | **Flaky.** 1 of 6 attempts succeeded fully. The other 5 hit a race where the SQL cell ran before the asynchronous trace export queue finished writing to Delta. | This is why the README opens with "run interactively." If you have a use case that genuinely needs scheduled trace generation, run a continuous agent in Model Serving or a Workflow rather than firing this quickstart from a one-shot job. |
+| Workspace where the Preview is **not enabled** in `Settings > Previews` | **Blocked at the experiment-binding cell** with `PERMISSION_DENIED: Failed to get signed principal context token`. No tables created. | Confirms the first prerequisite check above is the right gate. Customers will see this error if their workspace admin has not flipped the toggle. |
 
 ---
 
