@@ -220,8 +220,27 @@ for i, q in enumerate(QUESTIONS, 1):
     time.sleep(0.2)
 
 print(f"\nDone. {successes}/20 traces logged.")
-print("Allowing 20s for the trace ingestion buffer to flush to Delta...")
-time.sleep(20)
+print("Waiting for the trace ingestion buffer to flush to Delta...")
+
+# Poll for the spans table to appear in UC. Trace ingestion is asynchronous;
+# in interactive mode the human pause between cells is enough, but in job mode
+# this loop avoids a TABLE_OR_VIEW_NOT_FOUND on the next SQL cell.
+deadline = time.time() + 180
+while time.time() < deadline:
+    tables = [
+        r["tableName"]
+        for r in spark.sql(f"SHOW TABLES IN `{CATALOG}`.`{SCHEMA}`").collect()
+    ]
+    if f"{TABLE_PREFIX}_otel_spans" in tables:
+        print(f"Trace tables visible in {CATALOG}.{SCHEMA}: {sorted(tables)}")
+        break
+    print("  not yet flushed, waiting 10s...")
+    time.sleep(10)
+else:
+    raise RuntimeError(
+        f"Trace tables did not appear in {CATALOG}.{SCHEMA} within 180 seconds. "
+        "Check that the agent calls actually succeeded above."
+    )
 
 # COMMAND ----------
 
