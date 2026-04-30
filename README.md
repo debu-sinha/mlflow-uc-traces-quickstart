@@ -52,13 +52,17 @@ For a deeper architecture explanation, see [ARCHITECTURE.md](ARCHITECTURE.md). F
 
 ## Prerequisites
 
+> **Read this first.** A workspace admin must enable the **OTel Traces in Unity Catalog** Public Preview at `Settings > Previews` before this notebook will work. If the preview is off, the very first cell that creates the experiment will fail with `PERMISSION_DENIED: Failed to get signed principal context token`. That error is not a notebook bug. It is the workspace admin gate.
+
 | Requirement | Detail |
 |---|---|
-| Workspace | Databricks workspace in a [supported region](https://docs.databricks.com/aws/en/mlflow3/genai/tracing/trace-unity-catalog) (AWS, Azure, or GCP) |
+| Preview enabled | `Settings > Previews > MLflow OTel Traces in Unity Catalog` (workspace admin only) |
+| Workspace | Databricks workspace in a [supported region](https://docs.databricks.com/aws/en/mlflow3/genai/tracing/trace-unity-catalog) (AWS 13, Azure 19, GCP 5 regions in PuPr) |
 | Unity Catalog | Catalog where you can `CREATE SCHEMA`, plus `MODIFY` and `SELECT` on the resulting trace tables |
 | Compute | DBR 15.4 LTS or later, or Serverless notebook compute |
 | SQL warehouse | Any SQL warehouse (Serverless recommended) |
 | Foundation Model endpoint | Defaults to `databricks-meta-llama-3-3-70b-instruct`. Override the widget if your workspace uses a different endpoint |
+| MLflow version | 3.11.0 or newer (`pip install 'mlflow[databricks]>=3.11.0'`, the notebook's first cell does this) |
 
 Permissions reminder: `ALL_PRIVILEGES` is **not sufficient**. You need `USE_CATALOG`, `USE_SCHEMA`, and explicit `MODIFY` and `SELECT` on each `<prefix>_otel_<type>` table.
 
@@ -108,19 +112,22 @@ The notebook runs end-to-end in 8 to 12 minutes on a single-node cluster. Steps 
 | `ARCHITECTURE.md` | Data flow, Delta tables, Zerobus pipeline |
 | `DEMO_RUNBOOK.md` | Cell-by-cell walkthrough with what each step does and why |
 | `architecture.png`, `architecture.svg` | Architecture diagram, Excalidraw-authored |
-| `requirements.txt` | Python dependencies (`mlflow[databricks]>=3.11.0`, `openai>=1.54.0`) |
+| `requirements.txt` | Python dependency (`mlflow[databricks]>=3.11.0`) |
+| `screenshots/` | Real screenshots from a verified test run on a Databricks workspace |
 | `LICENSE` | Apache-2.0 |
 
 ---
 
 ## Verified on
 
-| Workspace | Result |
-|---|---|
-| AWS staging | Pass: 20 traces logged, 4 SQL queries returned, evaluation completed |
-| Serverless dev | Pass: same |
+The notebook was exercised end-to-end on two distinct Databricks workspaces before publishing, on a fresh UC schema each time. Honest results:
 
-The notebook was tested end-to-end on two distinct workspaces before publishing, on a fresh schema each time. Test details and screenshots are in [DEMO_RUNBOOK.md](DEMO_RUNBOOK.md).
+| Workspace state | Outcome | What it tells you |
+|---|---|---|
+| Preview enabled, Serverless compute | **Pass.** Schema + 4 OTel tables + 1 metadata table + 1 unified view created. ~20 traces from the agent landed in `<prefix>_otel_spans`. SQL queries returned. `mlflow.genai.evaluate` ran with `RelevanceToQuery`, `Safety`, and a `Guidelines` scorer (eval results screenshot embedded above). | The notebook works end-to-end on a workspace that has the Preview turned on. |
+| Preview not enabled | **Blocked at the experiment-binding cell** with `PERMISSION_DENIED: Failed to get signed principal context token`. No tables created. | Confirms that the first prerequisite check above is the right gate. This is the same error your customer will see if their workspace admin has not flipped the toggle. |
+
+If you hit the second case, send the customer's admin to `Settings > Previews` first.
 
 ---
 
