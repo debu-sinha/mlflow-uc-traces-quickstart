@@ -330,6 +330,12 @@ display(traces_df.head())
 
 # COMMAND ----------
 
+# Re-import in this cell so it works on Databricks Serverless notebook compute,
+# which does not always carry imports across cells the way classic clusters do.
+import json
+
+import pandas as pd
+
 
 # mlflow.search_traces returns request/response as JSON strings of the function
 # arguments. mlflow.genai.evaluate expects `inputs` to be a dict so the built-in
