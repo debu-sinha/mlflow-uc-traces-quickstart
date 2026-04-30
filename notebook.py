@@ -102,16 +102,31 @@ mlflow.set_tracking_uri("databricks")
 spark.sql(f"CREATE SCHEMA IF NOT EXISTS `{CATALOG}`.`{SCHEMA}`")
 
 CURRENT_USER = spark.sql("SELECT current_user() AS u").first()["u"]
-EXPERIMENT_NAME = f"/Users/{CURRENT_USER}/uc_traces_demo_{TABLE_PREFIX}"
+# Include both schema and prefix in the experiment path so re-running the
+# notebook against a new UC schema gets a fresh experiment. An MLflow experiment
+# can only be bound to a UC trace location at creation time, so reusing the same
+# experiment name with a different schema raises MlflowException.
+EXPERIMENT_NAME = f"/Users/{CURRENT_USER}/uc_traces_demo_{SCHEMA}_{TABLE_PREFIX}"
 
-experiment = mlflow.set_experiment(
-    experiment_name=EXPERIMENT_NAME,
-    trace_location=UnityCatalog(
-        catalog_name=CATALOG,
-        schema_name=SCHEMA,
-        table_prefix=TABLE_PREFIX,
-    ),
-)
+try:
+    experiment = mlflow.set_experiment(
+        experiment_name=EXPERIMENT_NAME,
+        trace_location=UnityCatalog(
+            catalog_name=CATALOG,
+            schema_name=SCHEMA,
+            table_prefix=TABLE_PREFIX,
+        ),
+    )
+except mlflow.exceptions.MlflowException as e:
+    if "already linked to a different trace location" in str(e):
+        raise RuntimeError(
+            f"Experiment '{EXPERIMENT_NAME}' already exists and is bound to a "
+            f"different trace location. Either change the `schema` or `table_prefix` "
+            f"widget so the experiment name (currently '{EXPERIMENT_NAME}') becomes "
+            f"unique, or delete the existing experiment in the MLflow UI and rerun. "
+            f"Original error: {e}"
+        ) from e
+    raise
 
 print(f"Experiment ID  : {experiment.experiment_id}")
 print(f"Experiment path: {EXPERIMENT_NAME}")
