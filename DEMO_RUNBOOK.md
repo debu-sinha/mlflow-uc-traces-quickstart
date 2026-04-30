@@ -25,7 +25,7 @@ Make sure the workspace meets these conditions. Most "demo doesn't work" stories
 | Workspace is in a [supported region](https://docs.databricks.com/aws/en/mlflow3/genai/tracing/trace-unity-catalog) | Check workspace URL or `databricks current-user me` against the region list | Move to a supported region. Region list covers AWS, Azure, and GCP. |
 | You can `CREATE SCHEMA` in the target catalog | `CREATE SCHEMA IF NOT EXISTS <catalog>.uc_traces_demo` in a SQL editor | Use a different catalog where you have privileges, or have an admin grant `USE_CATALOG` and `CREATE_SCHEMA`. |
 | A SQL warehouse exists and you have `CAN USE` | Open SQL Warehouses in the left nav, copy an ID | Ask an admin to create one or grant `CAN USE`. |
-| A Foundation Model serving endpoint is available | Open Serving in the left nav, find any `databricks-` prefixed model | Use any other endpoint name in the widget, or use Anthropic / OpenAI by adapting the LLM call cell. |
+| A Foundation Model serving endpoint is available | Open Serving in the left nav, find any `databricks-` prefixed model | Use any other endpoint name in the widget, or wire any other model provider by adapting the model call cell. |
 
 ---
 
