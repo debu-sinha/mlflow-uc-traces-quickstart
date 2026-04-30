@@ -90,6 +90,13 @@ from mlflow.entities.trace_location import UnityCatalog
 mlflow.set_tracking_uri("databricks")
 os.environ["MLFLOW_TRACING_SQL_WAREHOUSE_ID"] = WAREHOUSE_ID
 
+# Make trace writes synchronous so the SQL queries in step 3 see them immediately.
+# In interactive notebook mode the default async path is fine because the human
+# pause between cells absorbs the flush latency. In a one-shot job, async writes
+# can race the next cell. Setting this to "false" routes traces through a sync
+# exporter and removes the race.
+os.environ["MLFLOW_ENABLE_ASYNC_TRACE_LOGGING"] = "false"
+
 spark.sql(f"CREATE SCHEMA IF NOT EXISTS `{CATALOG}`.`{SCHEMA}`")
 
 CURRENT_USER = spark.sql("SELECT current_user() AS u").first()["u"]
@@ -343,6 +350,7 @@ traces_df = mlflow.search_traces(
     locations=[str(experiment.experiment_id)],
     max_results=10,
     return_type="pandas",
+    flush=True,
 )
 print(f"Pulled {len(traces_df)} traces for evaluation.")
 display(traces_df.head())
