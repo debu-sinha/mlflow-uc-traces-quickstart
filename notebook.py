@@ -84,18 +84,20 @@ print(f"Model endpoint: {MODEL_ENDPOINT}")
 
 import os
 
+# Set MLflow env vars BEFORE importing mlflow. Several mlflow modules read these
+# at import time, so setting them after the import is a no-op.
+os.environ["MLFLOW_TRACING_SQL_WAREHOUSE_ID"] = WAREHOUSE_ID
+# Synchronous trace writes so the SQL queries in step 3 see them immediately.
+# In interactive notebook mode the default async path is fine because the human
+# pause between cells absorbs flush latency. In a one-shot job, async writes
+# can race the next cell. Setting this to "false" routes traces through the
+# sync exporter and removes the race.
+os.environ["MLFLOW_ENABLE_ASYNC_TRACE_LOGGING"] = "false"
+
 import mlflow
 from mlflow.entities.trace_location import UnityCatalog
 
 mlflow.set_tracking_uri("databricks")
-os.environ["MLFLOW_TRACING_SQL_WAREHOUSE_ID"] = WAREHOUSE_ID
-
-# Make trace writes synchronous so the SQL queries in step 3 see them immediately.
-# In interactive notebook mode the default async path is fine because the human
-# pause between cells absorbs the flush latency. In a one-shot job, async writes
-# can race the next cell. Setting this to "false" routes traces through a sync
-# exporter and removes the race.
-os.environ["MLFLOW_ENABLE_ASYNC_TRACE_LOGGING"] = "false"
 
 spark.sql(f"CREATE SCHEMA IF NOT EXISTS `{CATALOG}`.`{SCHEMA}`")
 
