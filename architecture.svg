@@ -1,46 +1,79 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="708" viewBox="20 8 1000 708">
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="856" viewBox="0 0 1040 856">
 <defs><marker id="arrow-495057" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#495057" /></marker><style>text { font-family: "Segoe UI", system-ui, -apple-system, sans-serif; }</style></defs>
-<rect x="20" y="8" width="1000" height="708" fill="#ffffff" />
-<text x="510" y="50" font-size="22" fill="#1971c2" text-anchor="middle" font-weight="600">MLflow Traces in Unity Catalog: data flow</text>
-<text x="510" y="77" font-size="13" fill="#868e96" text-anchor="middle">Public Preview, April 30, 2026</text>
-<rect x="340" y="108" width="340" height="80" rx="8" stroke="#f8f9fa" fill="#1971c2" stroke-width="0" />
-<text x="510" y="142" font-size="15" fill="#f8f9fa" text-anchor="middle" font-weight="600">Your agent</text>
-<text x="510" y="164" font-size="13" fill="#f8f9fa" text-anchor="middle">@mlflow.trace + autolog</text>
-<path d="M 510 188 L 510 228" stroke="#495057" fill="none" stroke-width="2" marker-end="url(#arrow-495057)" />
-<text x="525" y="212" font-size="12" fill="#868e96">OTel spans (protobuf)</text>
-<rect x="120" y="248" width="780" height="136" rx="8" stroke="#4dabf7" fill="transparent" stroke-width="1" />
+<rect x="0" y="0" width="1040" height="856" fill="#ffffff" />
+<text x="520" y="50" font-size="22" fill="#1971c2" text-anchor="middle" font-weight="600">MLflow Traces in Unity Catalog: data flow</text>
+<text x="520" y="77" font-size="13" fill="#868e96" text-anchor="middle">Public Preview, April 30, 2026</text>
+
+<!-- Agent box -->
+<rect x="350" y="108" width="340" height="80" rx="8" fill="#1971c2" stroke-width="0" />
+<text x="520" y="142" font-size="15" fill="#f8f9fa" text-anchor="middle" font-weight="600">Your agent</text>
+<text x="520" y="164" font-size="13" fill="#f8f9fa" text-anchor="middle">@mlflow.trace + autolog</text>
+
+<!-- Arrow to pipeline -->
+<path d="M 520 188 L 520 228" stroke="#495057" fill="none" stroke-width="2" marker-end="url(#arrow-495057)" />
+<text x="535" y="212" font-size="12" fill="#868e96">OTel spans (protobuf)</text>
+
+<!-- Databricks-managed pipeline container -->
+<rect x="120" y="248" width="800" height="160" rx="8" stroke="#4dabf7" fill="transparent" stroke-width="1" />
 <text x="140" y="268" font-size="12" fill="#1971c2" font-weight="600">Databricks-managed pipeline</text>
-<rect x="180" y="288" width="300" height="68" rx="8" stroke="#f8f9fa" fill="#3b5bdb" stroke-width="0" />
+<rect x="180" y="288" width="300" height="68" rx="8" fill="#3b5bdb" stroke-width="0" />
 <text x="330" y="316" font-size="14" fill="#f8f9fa" text-anchor="middle" font-weight="600">Databricks OTel collector</text>
 <text x="330" y="334" font-size="12" fill="#f8f9fa" text-anchor="middle">REST endpoint</text>
+<text x="330" y="378" font-size="11" fill="#868e96" text-anchor="middle" font-style="italic">no SQL warehouse needed for writes</text>
 <path d="M 480 322 L 540 322" stroke="#495057" fill="none" stroke-width="2" marker-end="url(#arrow-495057)" />
-<rect x="540" y="288" width="300" height="68" rx="8" stroke="#f8f9fa" fill="#1864ab" stroke-width="0" />
+<rect x="540" y="288" width="300" height="68" rx="8" fill="#1864ab" stroke-width="0" />
 <text x="690" y="316" font-size="14" fill="#f8f9fa" text-anchor="middle" font-weight="600">Zerobus ingest</text>
 <text x="690" y="334" font-size="12" fill="#f8f9fa" text-anchor="middle">low-latency, serverless</text>
-<path d="M 510 384 L 510 424" stroke="#495057" fill="none" stroke-width="2" marker-end="url(#arrow-495057)" />
-<rect x="80" y="444" width="860" height="136" rx="8" stroke="#12b886" fill="transparent" stroke-width="1" />
-<text x="100" y="464" font-size="12" fill="#087f5b" font-weight="600">Your Unity Catalog schema (you own the data)</text>
-<rect x="108" y="484" width="196" height="80" rx="8" stroke="#f8f9fa" fill="#087f5b" stroke-width="0" />
-<text x="206" y="518" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">&lt;prefix&gt;_otel_spans</text>
-<text x="206" y="538" font-size="11" fill="#f8f9fa" text-anchor="middle">Delta table</text>
-<rect x="316" y="484" width="196" height="80" rx="8" stroke="#f8f9fa" fill="#087f5b" stroke-width="0" />
-<text x="414" y="518" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">&lt;prefix&gt;_otel_logs</text>
-<text x="414" y="538" font-size="11" fill="#f8f9fa" text-anchor="middle">Delta table</text>
-<rect x="524" y="484" width="196" height="80" rx="8" stroke="#f8f9fa" fill="#087f5b" stroke-width="0" />
-<text x="622" y="518" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">&lt;prefix&gt;_otel_metrics</text>
-<text x="622" y="538" font-size="11" fill="#f8f9fa" text-anchor="middle">Delta table</text>
-<rect x="732" y="484" width="196" height="80" rx="8" stroke="#f8f9fa" fill="#087f5b" stroke-width="0" />
-<text x="830" y="518" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">&lt;prefix&gt;_otel_annotations</text>
-<text x="830" y="538" font-size="11" fill="#f8f9fa" text-anchor="middle">Delta table</text>
-<path d="M 510 580 L 510 620" stroke="#495057" fill="none" stroke-width="2" marker-end="url(#arrow-495057)" />
-<rect x="40" y="640" width="168" height="56" rx="8" stroke="#f8f9fa" fill="#12b886" stroke-width="0" />
-<text x="124" y="672" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">MLflow UI</text>
-<rect x="222" y="640" width="168" height="56" rx="8" stroke="#f8f9fa" fill="#12b886" stroke-width="0" />
-<text x="306" y="672" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">SQL warehouse</text>
-<rect x="404" y="640" width="168" height="56" rx="8" stroke="#f8f9fa" fill="#12b886" stroke-width="0" />
-<text x="488" y="672" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">AI/BI dashboards</text>
-<rect x="586" y="640" width="168" height="56" rx="8" stroke="#f8f9fa" fill="#12b886" stroke-width="0" />
-<text x="670" y="672" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">Genie space</text>
-<rect x="768" y="640" width="232" height="56" rx="8" stroke="#f8f9fa" fill="#12b886" stroke-width="0" />
-<text x="884" y="672" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">mlflow.search_traces / evaluate</text>
+<text x="690" y="378" font-size="11" fill="#868e96" text-anchor="middle" font-style="italic">P50 &lt; 5s, P95 &lt; 30s sync latency</text>
+
+<!-- Arrow to UC -->
+<path d="M 520 408 L 520 448" stroke="#495057" fill="none" stroke-width="2" marker-end="url(#arrow-495057)" />
+
+<!-- UC container (taller for 2 rows of objects) -->
+<rect x="80" y="468" width="880" height="260" rx="8" stroke="#12b886" fill="transparent" stroke-width="1" />
+<text x="100" y="488" font-size="12" fill="#087f5b" font-weight="600">Your Unity Catalog schema (you own the data)</text>
+
+<!-- Row 1: 4 OTel raw tables -->
+<rect x="108" y="508" width="196" height="80" rx="8" fill="#087f5b" stroke-width="0" />
+<text x="206" y="542" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">&lt;prefix&gt;_otel_spans</text>
+<text x="206" y="562" font-size="11" fill="#f8f9fa" text-anchor="middle">Delta table</text>
+
+<rect x="316" y="508" width="196" height="80" rx="8" fill="#087f5b" stroke-width="0" />
+<text x="414" y="542" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">&lt;prefix&gt;_otel_logs</text>
+<text x="414" y="562" font-size="11" fill="#f8f9fa" text-anchor="middle">Delta table</text>
+
+<rect x="524" y="508" width="196" height="80" rx="8" fill="#087f5b" stroke-width="0" />
+<text x="622" y="542" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">&lt;prefix&gt;_otel_metrics</text>
+<text x="622" y="562" font-size="11" fill="#f8f9fa" text-anchor="middle">Delta table</text>
+
+<rect x="732" y="508" width="196" height="80" rx="8" fill="#087f5b" stroke-width="0" />
+<text x="830" y="542" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">&lt;prefix&gt;_otel_annotations</text>
+<text x="830" y="562" font-size="11" fill="#f8f9fa" text-anchor="middle">Delta table</text>
+
+<!-- Row 2 spacer label -->
+<text x="100" y="610" font-size="11" fill="#087f5b" font-weight="600">Plus the trace-level views the MLflow UI uses</text>
+
+<!-- Row 2: trace_metadata + trace_unified, stroke-only style to differentiate -->
+<rect x="120" y="624" width="384" height="80" rx="8" fill="#c3fae8" stroke="#087f5b" stroke-width="2" />
+<text x="312" y="658" font-size="13" fill="#087f5b" text-anchor="middle" font-weight="600">&lt;prefix&gt;_trace_metadata</text>
+<text x="312" y="678" font-size="11" fill="#087f5b" text-anchor="middle">Delta table, MLflow tags + assessments per trace</text>
+
+<rect x="536" y="624" width="384" height="80" rx="8" fill="#c3fae8" stroke="#087f5b" stroke-width="2" />
+<text x="728" y="658" font-size="13" fill="#087f5b" text-anchor="middle" font-weight="600">&lt;prefix&gt;_trace_unified</text>
+<text x="728" y="678" font-size="11" fill="#087f5b" text-anchor="middle">View, joins spans + annotations, one row per trace</text>
+
+<!-- Arrow to consumers -->
+<path d="M 520 728 L 520 768" stroke="#495057" fill="none" stroke-width="2" marker-end="url(#arrow-495057)" />
+
+<!-- Consumers row -->
+<rect x="40" y="784" width="168" height="56" rx="8" fill="#12b886" stroke-width="0" />
+<text x="124" y="816" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">MLflow UI</text>
+<rect x="222" y="784" width="168" height="56" rx="8" fill="#12b886" stroke-width="0" />
+<text x="306" y="816" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">SQL warehouse</text>
+<rect x="404" y="784" width="168" height="56" rx="8" fill="#12b886" stroke-width="0" />
+<text x="488" y="816" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">AI/BI dashboards</text>
+<rect x="586" y="784" width="168" height="56" rx="8" fill="#12b886" stroke-width="0" />
+<text x="670" y="816" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">Genie space</text>
+<rect x="768" y="784" width="232" height="56" rx="8" fill="#12b886" stroke-width="0" />
+<text x="884" y="816" font-size="13" fill="#f8f9fa" text-anchor="middle" font-weight="600">mlflow.search_traces / evaluate</text>
 </svg>
