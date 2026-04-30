@@ -367,7 +367,6 @@ traces_df = mlflow.search_traces(
     locations=[str(experiment.experiment_id)],
     max_results=10,
     return_type="pandas",
-    flush=True,
 )
 print(f"Pulled {len(traces_df)} traces for evaluation.")
 display(traces_df.head())
