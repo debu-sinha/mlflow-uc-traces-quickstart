@@ -2,6 +2,10 @@
 # MAGIC %md
 # MAGIC # MLflow Traces in Unity Catalog: 10-minute quickstart
 # MAGIC
+# MAGIC **Author:** Debu Sinha (`debu-sinha` on GitHub, `debusinha2009@gmail.com`)
+# MAGIC **Repo:** https://github.com/debu-sinha/mlflow-uc-traces-quickstart
+# MAGIC **License:** Apache-2.0
+# MAGIC
 # MAGIC This notebook walks through the full loop for storing GenAI traces in Unity Catalog
 # MAGIC and feeding them back into evaluation. Public Preview as of April 30, 2026.
 # MAGIC
